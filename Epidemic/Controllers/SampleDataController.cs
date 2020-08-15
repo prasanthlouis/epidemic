@@ -26,6 +26,13 @@ namespace Epidemic.Controllers
             });
         }
 
+        [HttpGet("[action]")]
+        public IActionResult StartGame()
+        {
+
+            return Ok();
+        }
+
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }
