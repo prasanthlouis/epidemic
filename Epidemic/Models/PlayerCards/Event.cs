@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Epidemic.Models.PlayerCards
 {
-    public class Event:PlayerCards
+    public class Event
     {
     }
 }
