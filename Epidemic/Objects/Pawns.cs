@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Epidemic.Models;
 using Epidemic.Models.PlayerCards;
 using Microsoft.AspNetCore.Identity;
 

@@ -6,19 +6,23 @@ using System.Threading.Tasks;
 
 namespace Epidemic.Models.PlayerCards
 {
-    public class PlayerCardDeck
+    public interface IPlayerCardDeck
     {
-        private PlayerCards[] playerCards;
+        PlayerCards Draw();
+    }
+    public class PlayerCardDeck : IPlayerCardDeck
+    {
+        public List<PlayerCards> PlayerCards { get; set; }
         private int cardsInDeck;
 
-        public PlayerCardDeck(Epidemic[] EpidemicDeck, City[] CityDeck, Event[] EventDeck)
+        public PlayerCardDeck(ICity city)
         {
-            cardsInDeck = EpidemicDeck.Length + CityDeck.Length + EventDeck.Length;
-            playerCards = new PlayerCards[cardsInDeck];
-            Shuffle(CityDeck);
-            Shuffle(EventDeck);
+            PlayerCards = new List<PlayerCards>();
+            var cityDeck = city.BuildDeck();
+            //Shuffle(CityDeck);
+            //Shuffle(EventDeck);
             //Merge
-            
+
         }
         
         private void Shuffle(PlayerCards[] deck) 
@@ -34,7 +38,7 @@ namespace Epidemic.Models.PlayerCards
                 Console.WriteLine("Players failed to stop the pandemic in time.");    
             }
             
-            return playerCards[--cardsInDeck];
+            return PlayerCards[--cardsInDeck];
         }
         
         public bool IsEmpty()

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Epidemic.Models;
+using Epidemic.Models.PlayerCards;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Epidemic.Controllers
@@ -9,28 +12,27 @@ namespace Epidemic.Controllers
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
+        private readonly IPlayerCardDeck _playerCardDeck;
+        public SampleDataController(IPlayerCardDeck playerCardDeck)
+        {
+            _playerCardDeck = playerCardDeck;
+        }
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
         [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
+        public IActionResult WeatherForecasts()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var players = new List<Player>();
+            _playerCardDeck.Draw();
+            foreach (var player in players)
             {
-                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
-        }
-
-        [HttpGet("[action]")]
-        public IActionResult StartGame()
-        {
-
+                player.AddCities();
+            }
             return Ok();
+            
         }
 
         public class WeatherForecast

@@ -6,9 +6,30 @@ using System.Threading.Tasks;
 
 namespace Epidemic.Models.PlayerCards
 {
-    public class City:PlayerCards
+    public interface ICity
+    {
+        List<City> BuildDeck();
+    }
+    public class City : PlayerCards, ICity
     {
         public Color Color { get; set; }
         public string Name { get; set; }
+
+        public List<City> BuildDeck()
+        {
+            return new List<City>()
+            {
+                new City()
+                {
+                    Color = Color.Yellow,
+                    Name = "Los Angeles"
+                },
+                new City()
+                {
+                    Color = Color.Red,
+                    Name = "Chennai"
+                }
+            };
+        }
     }
 }
